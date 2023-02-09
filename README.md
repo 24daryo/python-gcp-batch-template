@@ -28,5 +28,5 @@ gcloud builds submit --config=cloudbuild.yaml --region=asia-northeast1
 ### トリガーの設定
 
 - IAM: Cloud Build 編集者
-
-予めリポジトリとCloud Buildの連携を許可する必要あり
+- 予めリポジトリとCloud Buildの連携を許可する必要あり
+- コンソール画面で確認する場合「リージョン」に注意
