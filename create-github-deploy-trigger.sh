@@ -14,4 +14,9 @@ gcloud beta builds triggers create github \
     --branch-pattern=$CBT_BRANCH_PATTERN \
     --build-config=$CBT_BUILD_CONFIG_FILE \
     --include-logs-with-status \
-    --substitutions _CR_SERVICE_NAME=$CR_SERVICE_NAME,_CR_REGION=$CR_REGION
+    --substitutions \
+_CR_SERVICE_NAME=$CR_SERVICE_NAME,\
+_CR_REGION=$CR_REGION,\
+_DB_USER=$DB_USER,\
+_DB_PASSWORD=$DB_PASSWORD,\
+_DB_NAME=$DB_NAME,\

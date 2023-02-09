@@ -1,0 +1,31 @@
+version: "3"
+services:
+  api: # <= dokecr compose exec ~~ bash に該当
+    container_name: "python-rest-api"
+    env_file: .env # 環境変数読み込み
+    ports:
+      - "8080:8080" # これがないとURLでアクセスできない
+    
+    # build時のDockerfileの指定
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # その他
+    restart: always
+    tty: true
+
+  # cloudsql接続用のproxy
+  cloudsql-proxy:
+    image: gcr.io/cloudsql-docker/gce-proxy:1.19.1
+    env_file: .env # 環境変数読み込み
+    container_name: ${DB_HOST}
+    volumes:
+      - ./${SQL_PROXY_PATH}:/${SQL_PROXY_PATH}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    environment:
+      TZ: Asia/Tokyo
+    restart: always
+    command: /cloud_sql_proxy -instances=${CR_CLOUNDSQL_INSTANCE}=tcp:0.0.0.0:${DB_PORT} -credential_file=/${SQL_PROXY_PATH}
+# いわゆる全体の手順書. 各サービスのbuild内容が各Dockerfileに該当
