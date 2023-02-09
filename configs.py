@@ -1,5 +1,7 @@
 import os
 import dotenv
+import psycopg2
+
 dotenv.load_dotenv()
 
 SERVER_HOST = os.getenv('SERVER_HOST', '0.0.0.0')
@@ -15,11 +17,14 @@ INSTANCE_CONNECTION_NAME = os.getenv('CR_CLOUNDSQL_INSTANCE')
 INSTANCE_UNIX_SOCKET = f'cloudsql/{INSTANCE_CONNECTION_NAME}'
 IS_LOCAL = False if os.environ.get('SQL_PROXY_PATH') is None else True
 
+
 if IS_LOCAL:
     DB_URI = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 else:
     print("Global!!")
     # DB_URL = f"postgresql+pg8000://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock={INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432"
-    DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{INSTANCE_UNIX_SOCKET}/{DB_NAME}"
+    DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432/{DB_NAME}"
+    conn = psycopg2.connect(database=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=f"/{INSTANCE_UNIX_SOCKET}")
+    print(conn)
     # DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?host={INSTANCE_UNIX_SOCKET}"
     print(DB_URI)
