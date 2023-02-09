@@ -24,3 +24,9 @@ gcloud run deploy --source .
 ```
 gcloud builds submit --config=cloudbuild.yaml --region=asia-northeast1
 ```
+
+### トリガーの設定
+
+- IAM: Cloud Build 編集者
+
+予めリポジトリとCloud Buildの連携を許可する必要あり
