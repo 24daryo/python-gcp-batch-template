@@ -16,8 +16,9 @@ INSTANCE_UNIX_SOCKET = f'cloudsql/{INSTANCE_CONNECTION_NAME}'
 IS_LOCAL = False if os.environ.get('SQL_PROXY_PATH') is None else True
 
 if IS_LOCAL:
-    DB_URL = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+    DB_URI = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 else:
     print("Global!!")
-    DB_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock={INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432"
-    print(DB_URL)
+    # DB_URL = f"postgresql+pg8000://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock={INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432"
+    DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?host={INSTANCE_UNIX_SOCKET}"
+    print(DB_URI)

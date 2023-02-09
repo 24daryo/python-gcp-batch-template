@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import configs as C
 
 
-engine = create_engine(C.DB_URL)
+engine = create_engine(C.DB_URI)
 db_session = scoped_session(
     sessionmaker(
         autocommit=False,
