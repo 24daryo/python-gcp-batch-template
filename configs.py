@@ -20,4 +20,4 @@ if IS_LOCAL:
 else:
     print("Global!!")
     DB_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock={INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432"
-    
+    print(DB_URL)
