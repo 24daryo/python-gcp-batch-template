@@ -14,9 +14,9 @@ steps:
     '--region', '${_CR_REGION}',
     '--allow-unauthenticated', # 
     '--add-cloudsql-instances','${_CR_CLOUNDSQL_INSTANCE}',
-    '--update-env-vars', 'DB_USER,${_DB_USER}',
-    '--update-env-vars', 'DB_PASSWORD,${_DB_PASSWORD}',
-    '--update-env-vars', 'DB_NAME,${_DB_NAME}'
+    '--update-env-vars', 'DB_USER=${_DB_USER}',
+    '--update-env-vars', 'DB_PASSWORD=${_DB_PASSWORD}',
+    '--update-env-vars', 'DB_NAME=${_DB_NAME}'
     ]
 images:
 - 'gcr.io/$PROJECT_ID/${_CR_SERVICE_NAME}:$COMMIT_SHA'
