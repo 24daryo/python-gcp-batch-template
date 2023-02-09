@@ -25,7 +25,6 @@ else:
     # DB_URI = f"postgresql+pg8000://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_socket={INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432"
     # DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_socket={INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432"
     # DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432/{DB_NAME}"
-    # DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?host={INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432"
     DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?host={INSTANCE_UNIX_SOCKET}"
     # DB_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?host={INSTANCE_UNIX_SOCKET}"
     print(DB_URI)
