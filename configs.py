@@ -18,5 +18,6 @@ IS_LOCAL = False if os.environ.get('SQL_PROXY_PATH') is None else True
 if IS_LOCAL:
     DB_URL = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 else:
-    DB_URL = f"postgresql+sqlalchemy://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock={INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432"
+    print("Global!!")
+    DB_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock={INSTANCE_UNIX_SOCKET}/.s.PGSQL.5432"
     
