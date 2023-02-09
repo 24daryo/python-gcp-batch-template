@@ -6,7 +6,6 @@ from flask import Flask
 load_dotenv(verbose=True)
 app = Flask(__name__)
 
-
 @app.route("/")
 def hello_world():
    name = os.environ.get("TEST_VARIABLE", "Failed")
