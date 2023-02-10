@@ -1,4 +1,4 @@
-# python-cloudrun-test
+# python-gcp-batch-test
 
 ## 初期化
 

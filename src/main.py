@@ -1,15 +1,17 @@
 import os
 from flask import Flask
+import dotenv
+dotenv.load_dotenv()
 
 from database import db_session
 from models import User
-import configs as C
+
 
 app = Flask(__name__)
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
-   # これがないとbroken pipeエラーになる
+   # broken pipe error防止
    db_session.remove()
 
 @app.route("/test", methods=["GET"])
@@ -25,4 +27,4 @@ def hello_world():
    return f"Hello World!, Read {name}"
 
 if __name__ == "__main__":
-   app.run(debug=True, host=C.SERVER_HOST, port=C.SERVER_PORT)
+   app.run(debug=True, host='0.0.0.0', port=int(os.getenv("PORT", 8080)))
