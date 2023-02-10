@@ -1,5 +1,7 @@
 # python-gcp-batch-test
 
+![](./docs/diagram.drawio.png)
+
 ## 初期設定
 
 ### 1. `.env`の用意
