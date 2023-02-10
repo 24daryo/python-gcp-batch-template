@@ -2,12 +2,21 @@
 
 `Python[flask]` + `Docker` + `GCP[Run,Build,SQL,Storage]`
 
+Python用バッチ処理テンプレート
+
 ![](./docs/diagrams.drawio.svg)
+
+### 特徴
+
+1. 変数を設定は`.env`のみで完結
+2. GithubへPushして自動デプロイするCloud Buildの利用
+3. シェルスクリプトでCloud Build Triggerを簡単に設定可能
 
 ## 初期設定
 
 ### 1. `.env`の用意
 
+変数名はそのままかつ`=`にスペースを空けず、任意の変数を設定します
 ```py
 # ====================
 # Local Docker Compose Setting(手元で開発するのに必要)
@@ -26,16 +35,15 @@ CLOUD_SQL_NAME=''
 CLOUD_SQL_INSTANCE='~~~:---:~~~'
 
 # ====================
-# CloudBuild
+# Cloud Run
 # ====================
 # CloudRunのサービス名
-CR_SERVICE_NAME='2'
+CR_SERVICE_NAME=''
 # CloudRunのリージョン
 CR_REGION=''
 
-
 # ====================
-# CloudBuildTrigger
+# Cloud Build Trigger
 # キーの詳細：https://cloud.google.com/sdk/gcloud/reference/beta/builds/triggers/create/github
 # ====================
 # リポジトリオーナーの名前
@@ -52,24 +60,23 @@ CBT_TRIGGER_NAME=""
 CBT_TRIGGER_DESCRIPTION=""
 # トリガーのリージョン
 CBT_REGION=''
-
 ```
 
 ### 2. トリガーの登録
 
-記述済みの`create-trigger.sh`から処理を呼び出します
+A. 記述済みの`create-trigger.sh`から処理を呼び出します
 
 ```
 bash create-trigger.sh
 ```
 
-トリガーを削除する場合は以下のshellを実行します
+B. トリガーを削除する場合は`delete-trigger.sh`を用います
 
 ```
 bash delete-trigger.sh
 ```
 
-#### 補足. トリガーの設定の注意点
+C. トリガーに失敗する時
 
 - IAM: Cloud Build 編集者
 - 予めリポジトリとCloud Buildの連携を許可する必要あり
@@ -82,9 +89,7 @@ bash delete-trigger.sh
 
 ##　ローカルでの開発
 
-### 1. vnev構築
-
-※ docker-composeを用いるので、インテリセンス以外では不要
+### 1. venv構築
 
 ```
 python -m venv venv
@@ -93,18 +98,16 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+> docker-composeを用いるので、インテリセンス以外では不要
+
 ### 2. GCP用のサービスアカウントキーを設定
 
 credentialsフォルダに格納し、それに合わせたenvにします
 
-### 2. `docker-compose.yaml`の起動
-
-※ 事前のDockerインスストールが必要
+### 3. `docker-compose.yaml`の起動
 
 ```
 docker compose up --build
 ```
 
-##### 補足. `python main.py`ではダメ？
-
-proxyを立ち上げる必要があるためdocker-composeを用います
+> 事前のDockerインスストールが必要
