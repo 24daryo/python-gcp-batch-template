@@ -5,6 +5,7 @@ ENV PYTHONUNBUFFERED True
 ENV APP_HOME ./app
 WORKDIR $APP_HOME
 COPY ./src ./
+COPY .env ./
 
 COPY requirements.txt .
 RUN pip install --upgrade pip

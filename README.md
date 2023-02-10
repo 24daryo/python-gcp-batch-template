@@ -1,12 +1,83 @@
 # python-gcp-batch-test
 
-## 初期化
+## 初期設定
+
+### ローカル
+
+1. vnev構築
 
 ```
 python -m venv venv
 source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
+```
+
+※ docker-composeを用いるので、インテリセンス以外では不要
+
+### GCP
+
+1. `.env`の用意
+
+```py
+# ====================
+# Local Docker Compose Setting(手元で開発するのに必要)
+# ====================
+PORT='8080'
+LOCAL_SQL_PROXY_PATH='credentials/~~~.json'
+LOCAL_DB_HOST='db'
+LOCAL_DB_PORT='5432'
+
+# ====================
+# Cloud SQL
+# ====================
+CLOUD_SQL_USER=''
+CLOUD_SQL_PASSWORD=''
+CLOUD_SQL_NAME=''
+CLOUD_SQL_INSTANCE='~~~:---:~~~'
+
+# ====================
+# CloudBuild
+# ====================
+# CloudRunのサービス名
+CR_SERVICE_NAME='2'
+# CloudRunのリージョン
+CR_REGION=''
+
+
+# ====================
+# CloudBuildTrigger
+# キーの詳細：https://cloud.google.com/sdk/gcloud/reference/beta/builds/triggers/create/github
+# ====================
+# リポジトリオーナーの名前
+CBT_REPO_OWNER=""
+# リポジトリの名前
+CBT_REPO_NAME=""
+# ビルドを呼び出すリポジトリ内のブランチ名
+CBT_BRANCH_PATTERN="^hoge$"
+# CloudBuild構成ファイルの場所
+CBT_BUILD_CONFIG_FILE="cloudbuild.yaml"
+# トリガー名
+CBT_TRIGGER_NAME=""
+# トリガーの説明
+CBT_TRIGGER_DESCRIPTION=""
+# トリガーのリージョン
+CBT_REGION=''
+
+```
+
+2. トリガーの登録
+
+すでに`create-trigger.sh`に記述済み
+
+```
+bash create-trigger.sh
+```
+
+トリガーを削除する場合は以下のshellを実行
+
+```
+bash delete-trigger.sh
 ```
 
 ## デプロイ

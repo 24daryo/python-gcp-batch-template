@@ -23,8 +23,7 @@ def test():
 
 @app.route("/")
 def hello_world():
-   name = os.environ.get("TEST_VARIABLE", "Failed")
-   return f"Hello World!, Read {name}"
+   return f"Hello World!"
 
 if __name__ == "__main__":
    app.run(debug=True, host='0.0.0.0', port=int(os.getenv("PORT", 8080)))
