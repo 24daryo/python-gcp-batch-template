@@ -2,7 +2,7 @@
 
 `Python[flask]` + `Docker` + `GCP[Run,Build,SQL,Storage]`
 
-![](./docs/diagrams.drawio.png)
+![](./docs/diagrams.drawio.svg)
 
 ## 初期設定
 
