@@ -1,5 +1,7 @@
 # python-gcp-batch-test
 
+`Python[flask]` + `Docker` + `GCP[Run,Build,SQL,Storage]`
+
 ![](./docs/diagram.drawio.png)
 
 ## 初期設定
