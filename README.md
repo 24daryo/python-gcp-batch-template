@@ -79,6 +79,7 @@ bash delete-trigger.sh
 
 `cloudbuild.yaml`により設定したブランチへpushすると、自動的にデプロイされます
 
+
 ##　ローカルでの開発
 
 ### 1. vnev構築
@@ -91,6 +92,10 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+### 2. GCP用のサービスアカウントキーを設定
+
+credentialsフォルダに格納し、それに合わせたenvにします
 
 ### 2. `docker-compose.yaml`の起動
 
