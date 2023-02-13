@@ -1,0 +1,31 @@
+version: "3"
+services:
+  api: # <= dokecr compose exec ~~ bash に該当
+    container_name: "python-rest-api"
+    env_file: .env # 環境変数読み込み
+    ports:
+      - "${PORT}:${PORT}" # これがないとURLでアクセスできない
+    
+    # build時のDockerfileの指定
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # その他
+    # restart: always # 停止した際に自動で復活
+    tty: true # Dockerコンテナ内でターミナルを使用可能にする
+
+  # cloudsql接続用のproxy
+  cloudsql-proxy:
+    image: gcr.io/cloudsql-docker/gce-proxy:1.19.1
+    env_file: .env # 環境変数読み込み
+    container_name: ${LOCAL_DB_HOST}
+    volumes:
+      - ./${LOCAL_SQL_PROXY_PATH}:/${LOCAL_SQL_PROXY_PATH}
+    ports:
+      - "${LOCAL_DB_PORT}:${LOCAL_DB_PORT}"
+    environment:
+      TZ: Asia/Tokyo
+    restart: always
+    command: /cloud_sql_proxy -instances=${CLOUD_SQL_INSTANCE}=tcp:0.0.0.0:${LOCAL_DB_PORT} -credential_file=/${LOCAL_SQL_PROXY_PATH}
+# いわゆる全体の手順書. 各サービスのbuild内容が各Dockerfileに該当
