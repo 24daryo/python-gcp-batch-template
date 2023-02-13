@@ -43,7 +43,8 @@ steps:
   args:
   - '-c'
   - |
-    _JOB_EXISTS=$(gcloud beta scheduler jobs describe ${_CS_JOB_NAME} --format='value(schedule)')
+    _JOB_EXISTS=$(gcloud beta scheduler jobs describe ${_CS_JOB_NAME} --location=${_CS_LOCATION} --format='value(schedule)')
+    echo "$_JOB_EXISTS"
     if [[ -z "$_JOB_EXISTS" ]]; then
       gcloud beta scheduler jobs create http ${_CS_JOB_NAME} --schedule=${_CS_SCHEDULE} --uri=https://${_CRJ_REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$PROJECT_ID/jobs/${_CS_JOB_NAME}:run --http-method=${_CS_HTTP_METHOD} --location=${_CS_LOCATION}
     else
