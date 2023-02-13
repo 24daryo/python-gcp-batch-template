@@ -12,8 +12,8 @@ services:
       dockerfile: Dockerfile
 
     # その他
-    restart: always # 停止した際に自動で復活
-    tty: true
+    # restart: always # 停止した際に自動で復活
+    tty: true # Dockerコンテナ内でターミナルを使用可能にする
 
   # cloudsql接続用のproxy
   cloudsql-proxy:
