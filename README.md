@@ -14,6 +14,10 @@ Python用バッチ処理テンプレート
 
 ## 初期設定
 
+### Cloud Scheduler API用の権限付きサービスアカウント作成
+
+oidc-service-account-email
+
 ### 1. `.env`の用意
 
 変数名はそのままかつ`=`にスペースを空けず、任意の変数を設定します
