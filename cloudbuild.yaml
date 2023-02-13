@@ -6,6 +6,12 @@ steps:
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/${_CRJ_SERVICE_NAME}:$COMMIT_SHA']
+# Delete existing Cloud Run job
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: [
+    'beta', 'run', 'jobs', 'delete', '${_CRJ_SERVICE_NAME}', '--region', '${_CRJ_REGION}', '--quiet' # --quite: エラーや警告などの詳細なメッセージを非表示表示
+  ]
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
