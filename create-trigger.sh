@@ -7,7 +7,7 @@ source ./.env
 # キーの詳細：https://cloud.google.com/sdk/gcloud/reference/beta/builds/triggers/create/github
 gcloud beta builds triggers create github \
     --name=$CBT_TRIGGER_NAME \
-    --description=$CBT_TRIGGER_DESCRIPTION \
+    --description="$CBT_TRIGGER_DESCRIPTION" \
     --region=$CBT_REGION \
     --repo-name=$CBT_REPO_NAME \
     --repo-owner=$CBT_REPO_OWNER \
@@ -27,8 +27,8 @@ _CRJ_MEMORY=$CRJ_MEMORY,\
 _CRJ_TASK_TIMEOUT=$CRJ_TASK_TIMEOUT,\
 _CRJ_PARALLELISM=$CRJ_PARALLELISM,\
 _CRJ_TASKS=$CRJ_TASKS,\
-_LINE_NOTIFY_TOKEN=$LINE_NOTIFY_TOKEN
+_LINE_NOTIFY_TOKEN=$LINE_NOTIFY_TOKEN,\
 _CS_JOB_NAME=$CS_JOB_NAME,\
-_CS_SCHEDULE=$CS_SCHEDULE,\
+_CS_SCHEDULE="${CS_SCHEDULE}",\
 _CS_HTTP_METHOD=$CS_HTTP_METHOD,\
 _CS_LOCATION=$CS_LOCATION
