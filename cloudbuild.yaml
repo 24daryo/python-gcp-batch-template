@@ -32,37 +32,5 @@ steps:
     '--set-env-vars', 'CLOUD_SQL_INSTANCE=${_CLOUD_SQL_INSTANCE}',
     '--set-env-vars', 'LINE_NOTIFY_TOKEN=${_LINE_NOTIFY_TOKEN}',
   ]
-# Get Service URL
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   id: get_service_url
-#   entrypoint: 'bash'
-#   args:
-#   - '-c'
-#   - |
-#     SERVICE_URL=$(gcloud beta run jobs describe ${_CRJ_SERVICE_NAME} --region=${_CRJ_REGION} --format='value(status.address.url)')
-#     echo "##vars"
-#     echo "SERVICE_URL: $SERVICE_URL"
-# Create or Update Job https://cloud.google.com/run/docs/execute/jobs-on-schedule?hl=ja
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: create_or_update_job
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    if gcloud beta scheduler jobs describe "$_CS_JOB_NAME" --location="$_CS_LOCATION" --format='value(schedule)' > /dev/null; then
-      gcloud beta scheduler jobs update "$_CS_JOB_NAME" \
-        --schedule="$_CS_SCHEDULE" \
-        --uri="https://${_CRJ_REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$PROJECT_ID/jobs/${_CS_JOB_NAME}:run" \
-        --http-method="$_CS_HTTP_METHOD" \
-        --location="$_CS_LOCATION" \
-        --oidc-service-account-email="$_CS_OIDC_SERVICE_ACCOUNT_EMAIL"
-    else
-      gcloud beta scheduler jobs create http "$_CS_JOB_NAME" \
-        --schedule="$_CS_SCHEDULE" \
-        --uri="https://${_CRJ_REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$PROJECT_ID/jobs/${_CS_JOB_NAME}:run" \
-        --http-method="$_CS_HTTP_METHOD" \
-        --location="$_CS_LOCATION" \
-        --oidc-service-account-email="$_CS_OIDC_SERVICE_ACCOUNT_EMAIL"
-    fi
 images:
 - 'gcr.io/$PROJECT_ID/${_CRJ_SERVICE_NAME}:$COMMIT_SHA'

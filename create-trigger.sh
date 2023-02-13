@@ -27,9 +27,11 @@ _CRJ_MEMORY=$CRJ_MEMORY,\
 _CRJ_TASK_TIMEOUT=$CRJ_TASK_TIMEOUT,\
 _CRJ_PARALLELISM=$CRJ_PARALLELISM,\
 _CRJ_TASKS=$CRJ_TASKS,\
-_LINE_NOTIFY_TOKEN=$LINE_NOTIFY_TOKEN,\
-_CS_JOB_NAME=$CS_JOB_NAME,\
-_CS_SCHEDULE="${CS_SCHEDULE}",\
-_CS_HTTP_METHOD=$CS_HTTP_METHOD,\
-_CS_LOCATION=$CS_LOCATION,\
-_CS_OIDC_SERVICE_ACCOUNT_EMAIL="${CS_OIDC_SERVICE_ACCOUNT_EMAIL}"
+_LINE_NOTIFY_TOKEN=$LINE_NOTIFY_TOKEN
+# スケジューラーの作成
+gcloud beta scheduler jobs create http "$CS_JOB_NAME" \
+    --schedule="$CS_SCHEDULE" \
+    --uri="https://${CRJ_REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$PROJECT_ID/jobs/${CS_JOB_NAME}:run" \
+    --http-method="$CS_HTTP_METHOD" \
+    --location="$CS_LOCATION" \
+    --oidc-service-account-email="$CS_OIDC_SERVICE_ACCOUNT_EMAIL"

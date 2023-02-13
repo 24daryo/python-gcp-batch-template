@@ -115,3 +115,14 @@ docker compose up --build
 ```
 
 > 事前のDockerインスストールが必要
+
+
+一旦ローカルで試してみる
+
+```
+gcloud beta scheduler jobs create http test_job_name \
+    --schedule="30 * * * *" \
+    --uri="https://asia-northeast1-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/aihubble/jobs/test_job_name:run" \
+    --http-method=GET \
+    --location="asia-northeast1"
+```
