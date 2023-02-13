@@ -5,7 +5,7 @@ source ./.env
 # branch-patternを指定しているの、そのファイルにpushしてデプロイ
 # or --tag-pattern=TAG_PATTERN
 # キーの詳細：https://cloud.google.com/sdk/gcloud/reference/beta/builds/triggers/create/github
-echo gcloud beta builds triggers create github \
+gcloud beta builds triggers create github \
     --name=$CBT_TRIGGER_NAME \
     --description="$CBT_TRIGGER_DESCRIPTION" \
     --region=$CBT_REGION \
