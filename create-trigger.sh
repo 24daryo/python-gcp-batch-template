@@ -29,13 +29,14 @@ _CRJ_PARALLELISM=$CRJ_PARALLELISM,\
 _CRJ_TASKS=$CRJ_TASKS,\
 _LINE_NOTIFY_TOKEN=$LINE_NOTIFY_TOKEN
 
-# スケジューラーの作成
+# バッチを起動するスケジューラーの作成
 PROJECT_ID=$(gcloud config get-value project)
+PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format="value(projectNumber)")
 gcloud beta scheduler jobs create http "$CS_JOB_NAME" \
     --schedule="$CS_SCHEDULE" \
     --uri="https://${CRJ_REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$PROJECT_ID/jobs/${CRJ_SERVICE_NAME}:run" \
-    --http-method="$CS_HTTP_METHOD" \
+    --http-method="POST" \
     --location="$CS_LOCATION" \
-    --oidc-service-account-email="$CS_OIDC_SERVICE_ACCOUNT_EMAIL"\
+    --oauth-service-account-email="$PROJECT_NUMBER-compute@developer.gserviceaccount.com"\
     --time-zone='Asia/Tokyo' \
     --description="$CS_DESCRIPTION"
