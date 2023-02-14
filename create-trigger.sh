@@ -28,10 +28,14 @@ _CRJ_TASK_TIMEOUT=$CRJ_TASK_TIMEOUT,\
 _CRJ_PARALLELISM=$CRJ_PARALLELISM,\
 _CRJ_TASKS=$CRJ_TASKS,\
 _LINE_NOTIFY_TOKEN=$LINE_NOTIFY_TOKEN
+
 # スケジューラーの作成
+PROJECT_ID=$(gcloud config get-value project)
 gcloud beta scheduler jobs create http "$CS_JOB_NAME" \
     --schedule="$CS_SCHEDULE" \
-    --uri="https://${CRJ_REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$PROJECT_ID/jobs/${CS_JOB_NAME}:run" \
+    --uri="https://${CRJ_REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$PROJECT_ID/jobs/${CRJ_SERVICE_NAME}:run" \
     --http-method="$CS_HTTP_METHOD" \
     --location="$CS_LOCATION" \
-    --oidc-service-account-email="$CS_OIDC_SERVICE_ACCOUNT_EMAIL"
+    --oidc-service-account-email="$CS_OIDC_SERVICE_ACCOUNT_EMAIL"\
+    --time-zone='Asia/Tokyo' \
+    --description="$CS_DESCRIPTION"
