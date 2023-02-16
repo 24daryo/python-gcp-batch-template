@@ -10,6 +10,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - ./${LOCAL_STORAGE_SERVICE_ACCOUNT_KEY_PATH}:/${LOCAL_STORAGE_SERVICE_ACCOUNT_KEY_PATH}
 
     # その他
     # restart: always # 停止した際に自動で復活

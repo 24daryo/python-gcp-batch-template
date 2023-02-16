@@ -31,6 +31,9 @@ steps:
     '--set-env-vars', 'CLOUD_SQL_NAME=${_CLOUD_SQL_NAME}',
     '--set-env-vars', 'CLOUD_SQL_INSTANCE=${_CLOUD_SQL_INSTANCE}',
     '--set-env-vars', 'LINE_NOTIFY_TOKEN=${_LINE_NOTIFY_TOKEN}',
+    '--set-env-vars', 'FROM_EMAIL=${_FROM_EMAIL}',
+    '--set-env-vars', 'FROM_PASSWORD=${_FROM_PASSWORD}',
+    '--set-env-vars', 'TO_EMAIL=${_TO_EMAIL}',
   ]
 images:
 - 'gcr.io/$PROJECT_ID/${_CRJ_SERVICE_NAME}:$COMMIT_SHA'
