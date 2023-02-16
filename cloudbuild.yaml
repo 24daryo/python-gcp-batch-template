@@ -34,6 +34,7 @@ steps:
     '--set-env-vars', 'FROM_EMAIL=${_FROM_EMAIL}',
     '--set-env-vars', 'FROM_PASSWORD=${_FROM_PASSWORD}',
     '--set-env-vars', 'TO_EMAIL=${_TO_EMAIL}',
+    '--set-env-vars', 'CLOUD_STORAGE_BUCKET=${_CLOUD_STORAGE_BUCKET}',
   ]
 images:
 - 'gcr.io/$PROJECT_ID/${_CRJ_SERVICE_NAME}:$COMMIT_SHA'
