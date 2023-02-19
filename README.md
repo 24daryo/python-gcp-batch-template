@@ -23,12 +23,30 @@ oidc-service-account-email
 変数名はそのままかつ`=`にスペースを空けず、任意の変数を設定します
 ```py
 # ====================
+# メッセージング
+# ====================
+# LINEへ通知するためのトークン
+LINE_NOTIFY_TOKEN=''
+# 送信元メールアドレス
+FROM_EMAIL="~~@gmail.com"
+# 送信元パスワード(2段階認証プロセスを利用してアプリパスワード入力)
+FROM_PASSWORD=""
+# 送信先メールアドレス
+TO_EMAIL="~~~@~~~"
+
+# ====================
 # Local Docker Compose Setting(手元で開発するのに必要)
 # ====================
 PORT='8080'
-LOCAL_SQL_PROXY_PATH='credentials/~~~.json'
+LOCAL_SQL_PROXY_PATH='credentials/cloud-sql-proxy.json'
+LOCAL_STORAGE_SERVICE_ACCOUNT_KEY_PATH='credentials/cloud-storage.json'
 LOCAL_DB_HOST='db'
 LOCAL_DB_PORT='5432'
+
+# ====================
+# Cloud Storage
+# ====================
+CLOUD_STORAGE_BUCKET=''
 
 # ====================
 # Cloud SQL
@@ -36,26 +54,53 @@ LOCAL_DB_PORT='5432'
 CLOUD_SQL_USER=''
 CLOUD_SQL_PASSWORD=''
 CLOUD_SQL_NAME=''
-CLOUD_SQL_INSTANCE='~~~:---:~~~'
+CLOUD_SQL_INSTANCE='~~~:~~~:~~~'
 
 # ====================
-# Cloud Run
+# Cloud Run Jobs
+# 詳細：https://cloud.google.com/run/docs/create-jobs?hl=ja
 # ====================
 # CloudRunのサービス名
-CR_SERVICE_NAME=''
+CRJ_SERVICE_NAME=''
 # CloudRunのリージョン
-CR_REGION=''
+CRJ_REGION=''
+# CPU
+CRJ_CPU='1'
+# Memory [m, k, M, G, T, Ki, Mi, Gi, Ti, Pi, Ei] のいずれか
+CRJ_MEMORY='1Gi'
+# タスクの実行数
+CRJ_TASKS='1'
+# 失敗したタスクの再試行回数。デフォルトは3
+CRJ_MAX_RETRIES='3'
+# タスクの最大実行数 (例：'60s')
+CRJ_TASK_TIMEOUT='3600s'
+# PARALLELISM
+CRJ_PARALLELISM='0'
 
 # ====================
-# Cloud Build Trigger
-# キーの詳細：https://cloud.google.com/sdk/gcloud/reference/beta/builds/triggers/create/github
+# Cloud Scheduler
+# 詳細：https://cloud.google.com/run/docs/execute/jobs-on-schedule?hl=ja
+# ====================
+# ジョブ名(英数ハイフンアンダーのみ)
+CS_JOB_NAME=''
+# Cloud Schedulerの説明
+CS_DESCRIPTION=""
+# Cloud Schedulerのリージョン
+CS_LOCATION=''
+# ジョブを起動する時間, (分 時刻 日 月 曜日)
+CS_SCHEDULE="0 9 * * *"
+
+
+# ====================
+# CloudBuildTrigger
+# 詳細：https://cloud.google.com/sdk/gcloud/reference/beta/builds/triggers/create/github
 # ====================
 # リポジトリオーナーの名前
 CBT_REPO_OWNER=""
 # リポジトリの名前
 CBT_REPO_NAME=""
 # ビルドを呼び出すリポジトリ内のブランチ名
-CBT_BRANCH_PATTERN="^hoge$"
+CBT_BRANCH_PATTERN="^prod$"
 # CloudBuild構成ファイルの場所
 CBT_BUILD_CONFIG_FILE="cloudbuild.yaml"
 # トリガー名
@@ -64,6 +109,7 @@ CBT_TRIGGER_NAME=""
 CBT_TRIGGER_DESCRIPTION=""
 # トリガーのリージョン
 CBT_REGION=''
+
 ```
 
 ### 2. トリガーの登録
